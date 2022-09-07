@@ -2,8 +2,13 @@ import Logo from "./Styles/LogoStyle";
 import Input from "./Styles/InputStyle";
 import Button from "./Styles/ButtonStyle";
 import RegisterOrSignIn from "./Styles/RegisterOrSignInStyle";
+import { useNavigate } from "react-router-dom";
 
 export default function RegistrationScreen() {
+  const navigate = useNavigate();
+  function ChangeScreen() {
+    navigate("/");
+  }
   return (
     <>
       <Logo>MyWallet</Logo>
@@ -16,7 +21,7 @@ export default function RegistrationScreen() {
         </form>
       </Input>
       <Button>Cadastrar</Button>
-      <RegisterOrSignIn>Já tem uma conta? Entre agora!</RegisterOrSignIn>
+      <RegisterOrSignIn onClick={ChangeScreen}>Já tem uma conta? Entre agora!</RegisterOrSignIn>
     </>
   );
 }
