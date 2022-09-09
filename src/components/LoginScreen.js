@@ -4,9 +4,22 @@ import Input from "./Styles/InputStyle";
 import Button from "./Styles/ButtonStyle";
 import RegisterOrSignIn from "./Styles/RegisterOrSignInStyle";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 export default function LoginScreen() {
   const navigate = useNavigate();
+  const [loginInfo, setLoginInfo] = useState({
+    email: "",
+    password: "",
+  });
+  function handleLogin(e) {
+    e.preventDefault();
+    setLoginInfo({
+      ...loginInfo,
+      [e.target.name]: e.target.value,
+    });
+  console.log(loginInfo)
+  }
   function ChangeScreen() {
     navigate("/sign-up");
   }
@@ -15,8 +28,20 @@ export default function LoginScreen() {
       <Logo>MyWallet</Logo>
       <Input>
         <form>
-          <input type="email" placeholder="E-mail" name="email" />
-          <input type="password" placeholder="Senha" name="password" />
+          <input
+            type="email"
+            placeholder="E-mail"
+            name="email"
+            value={loginInfo.email}
+            onChange={handleLogin}
+          />
+          <input
+            type="password"
+            placeholder="Senha"
+            name="password"
+            value={loginInfo.password}
+            onChange={handleLogin}
+          />
         </form>
       </Input>
       <Button>Entrar</Button>
@@ -25,7 +50,6 @@ export default function LoginScreen() {
   );
 }
 
-
-const Login = styled.div `
-margin-top: 20vh;
-`
+const Login = styled.div`
+  margin-top: 20vh;
+`;
