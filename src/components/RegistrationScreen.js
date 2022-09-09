@@ -4,6 +4,7 @@ import Button from "./Styles/ButtonStyle";
 import RegisterOrSignIn from "./Styles/RegisterOrSignInStyle";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import axios from "axios";
 
 export default function RegistrationScreen() {
   const navigate = useNavigate();
@@ -21,7 +22,44 @@ export default function RegistrationScreen() {
       [e.target.name]: e.target.value,
     })
   }
-  console.log(registrationInfo)
+  
+  function sendRegistrationInfo() {
+    const promise = axios.post(
+      "http://localhost:5000/sign-up",
+      registrationInfo
+    );
+
+    promise.then((res) => {
+      navigate("/");
+    });
+
+    promise.catch((res) => {
+      if (res.response.status === 422) {
+        alert("Preencha todos os campos");
+      }
+
+      if (res.response.status === 409) {
+        alert("Este e-mail já está cadastrado");
+        setRegistrationInfo({
+          name: "",
+          email: "",
+          password: "",
+          confirmPassword: "",
+        })
+      }
+
+      if (res.response.status === 400) {
+        alert("A senha não confere");
+        setRegistrationInfo({
+          name: "",
+          email: "",
+          password: "",
+          confirmPassword: "",
+        })
+      }
+    });
+  }
+
   function ChangeScreen() {
     navigate("/");
   }
@@ -32,7 +70,7 @@ export default function RegistrationScreen() {
         <form>
           <input
             type="name"
-            placeholder="Name"
+            placeholder="Nome"
             name="name"
             value={registrationInfo.name}
             onChange={handleRegistration}
@@ -60,7 +98,7 @@ export default function RegistrationScreen() {
           />
         </form>
       </Input>
-      <Button>Cadastrar</Button>
+      <Button onClick={sendRegistrationInfo}>Cadastrar</Button>
       <RegisterOrSignIn onClick={ChangeScreen}>Já tem uma conta? Entre agora!</RegisterOrSignIn>
     </>
   );

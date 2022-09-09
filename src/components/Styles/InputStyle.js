@@ -16,7 +16,7 @@ const Input = styled.div`
     margin: 10px ;
     font-size: 100%;
     padding: 5%;
-    color: #D5D5D5;
+    color: #8C11BE;
 }
 
 input::placeholder {
