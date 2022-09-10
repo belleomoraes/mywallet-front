@@ -19,7 +19,6 @@ export default function LoginScreen() {
       ...loginInfo,
       [e.target.name]: e.target.value,
     });
-    console.log(loginInfo);
   }
 
   function sendLoginInfo() {
@@ -27,7 +26,6 @@ export default function LoginScreen() {
 
     promise.then((res) => {
       localStorage.setItem("myTokenInLocalStorage", res.data);
-      console.log(localStorage);
       navigate("/home");
     });
 

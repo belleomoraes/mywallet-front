@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 export default function HomeScreen() {
   const navigate = useNavigate();
   function LogOut() {
+    localStorage.removeItem("myTokenInLocalStorage")
     navigate("/");
   }
 
