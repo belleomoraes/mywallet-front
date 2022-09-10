@@ -4,8 +4,9 @@ import Input from "./Styles/InputStyle";
 import Button from "./Styles/ButtonStyle";
 import RegisterOrSignIn from "./Styles/RegisterOrSignInStyle";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import axios from "axios";
+import UserContext from "../context/UserContext";
 
 export default function LoginScreen() {
   const navigate = useNavigate();
@@ -13,6 +14,7 @@ export default function LoginScreen() {
     email: "",
     password: "",
   });
+  const { username, setUsername } = useContext(UserContext);
   function handleLogin(e) {
     e.preventDefault();
     setLoginInfo({
@@ -25,7 +27,8 @@ export default function LoginScreen() {
     const promise = axios.post("http://localhost:5000/", loginInfo);
 
     promise.then((res) => {
-      localStorage.setItem("myTokenInLocalStorage", res.data);
+      localStorage.setItem("myTokenInLocalStorage", res.data.token);
+      setUsername(res.data.username);
       navigate("/home");
     });
 

@@ -1,4 +1,5 @@
-export default function WithoutHistory() {
+export default function WithtHistory({history}) {
+
     return (
         <>
           <span>

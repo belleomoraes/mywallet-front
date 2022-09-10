@@ -4,12 +4,15 @@ import NewRecord from "./Styles/NewRecordStyle";
 import WithoutHistory from "./HomeWithoutHistory";
 import WithHistory from "./HomeWithHistory";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import axios from "axios";
+import UserContext from "../context/UserContext";
 
 export default function HomeScreen() {
   const navigate = useNavigate();
   const [history, setHistory] = useState([]);
+  const { username } = useContext(UserContext);
+  console.log("🚀 passa aqui por favor meu jesus ~ file: HomeScreen.js ~ line 15 ~ HomeScreen ~ username", username)
 
   useEffect(() => {
     const tokenLocal = localStorage.getItem("myTokenInLocalStorage");
@@ -25,7 +28,7 @@ export default function HomeScreen() {
     promise.then((res) => {
       setHistory(res.data);
     });
-  }, [history]);
+  }, []);
   
   function LogOut() {
     localStorage.removeItem("myTokenInLocalStorage")
@@ -42,11 +45,11 @@ export default function HomeScreen() {
   return (
     <>
       <Head>
-        <div>Olá, Fulano</div>
+        <div>Olá, {username}</div>
         <ion-icon name="log-out-outline" onClick={LogOut}></ion-icon>
       </Head>
       <HistoryBox>
-      {history.length <= 0 ?  <WithoutHistory/> : <WithHistory/>}
+      {history.length <= 0 ?  <WithoutHistory/> : <WithHistory history = {history}/>}
       </HistoryBox>
       <NewRecord>
         <span onClick={AddDeposit}>
