@@ -9,29 +9,28 @@ import axios from "axios";
 import UserContext from "../context/UserContext";
 
 export default function HomeScreen() {
+  const tokenLocal = localStorage.getItem("myTokenInLocalStorage");
   const navigate = useNavigate();
+  if (!tokenLocal) {
+    navigate("/");
+  }
   const [history, setHistory] = useState([]);
-  const { username } = useContext(UserContext);
-  console.log("🚀 passa aqui por favor meu jesus ~ file: HomeScreen.js ~ line 15 ~ HomeScreen ~ username", username)
+  const username = localStorage.getItem('username');
 
   useEffect(() => {
-    const tokenLocal = localStorage.getItem("myTokenInLocalStorage");
     const config = {
       headers: {
         Authorization: `Bearer ${tokenLocal}`,
       },
     };
-    const promise = axios.get(
-      "http://localhost:5000/home",
-      config
-    );
+    const promise = axios.get("http://localhost:5000/home", config);
     promise.then((res) => {
       setHistory(res.data);
     });
   }, []);
-  
+
   function LogOut() {
-    localStorage.removeItem("myTokenInLocalStorage")
+    localStorage.removeItem("myTokenInLocalStorage");
     navigate("/");
   }
 
@@ -49,7 +48,7 @@ export default function HomeScreen() {
         <ion-icon name="log-out-outline" onClick={LogOut}></ion-icon>
       </Head>
       <HistoryBox>
-      {history.length <= 0 ?  <WithoutHistory/> : <WithHistory history = {history}/>}
+        {history.length <= 0 ? <WithoutHistory /> : <WithHistory history={history} />}
       </HistoryBox>
       <NewRecord>
         <span onClick={AddDeposit}>

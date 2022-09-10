@@ -43,7 +43,7 @@ export default function DepositScreen() {
       <Input>
         <form>
           <input
-            type="text"
+            type="number"
             placeholder="Valor"
             name="value"
             value={depositInfo.value}

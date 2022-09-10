@@ -38,10 +38,6 @@ const HistoryBox = styled.div`
     color: #c6c6c6;
   }
 
-  h4 {
-    color: #c70000; /* se for deposito é #03AC00 */
-  }
-
   h5 {
     
     font-weight: bold;

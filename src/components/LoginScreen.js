@@ -28,7 +28,8 @@ export default function LoginScreen() {
 
     promise.then((res) => {
       localStorage.setItem("myTokenInLocalStorage", res.data.token);
-      setUsername(res.data.username);
+      localStorage.setItem("username", res.data.username);
+
       navigate("/home");
     });
 

@@ -11,6 +11,7 @@ import { useState } from "react";
 
 export default function App() {
   const [username, setUsername] = useState("")
+
   return (
     <UserContext.Provider value = {{username, setUsername}}>
       <GlobalStyle />
