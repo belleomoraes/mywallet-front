@@ -3,6 +3,7 @@ import Input from "./Styles/InputStyle";
 import Button from "./Styles/ButtonStyle";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import axios from "axios";
 export default function DepositScreen() {
   const navigate = useNavigate();
   const [depositInfo, setDepositInfo] = useState({
@@ -19,6 +20,19 @@ export default function DepositScreen() {
     
   }
   function AddDeposit() {
+    const tokenLocal = localStorage.getItem("myTokenInLocalStorage");
+    const config = {
+      headers: {
+        Authorization: `Bearer ${tokenLocal}`,
+      },
+    };
+    const promise = axios.post(
+      "http://localhost:5000/deposit", depositInfo,
+      config
+    );
+    promise.then((res) => {
+      setDepositInfo(res.data);
+    });
     navigate("/home");
   }
   return (

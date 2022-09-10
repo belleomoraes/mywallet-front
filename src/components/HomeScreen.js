@@ -4,9 +4,29 @@ import NewRecord from "./Styles/NewRecordStyle";
 import WithoutHistory from "./HomeWithoutHistory";
 import WithHistory from "./HomeWithHistory";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 export default function HomeScreen() {
   const navigate = useNavigate();
+  const [history, setHistory] = useState([]);
+
+  useEffect(() => {
+    const tokenLocal = localStorage.getItem("myTokenInLocalStorage");
+    const config = {
+      headers: {
+        Authorization: `Bearer ${tokenLocal}`,
+      },
+    };
+    const promise = axios.get(
+      "http://localhost:5000/home",
+      config
+    );
+    promise.then((res) => {
+      setHistory(res.data);
+    });
+  }, [history]);
+  
   function LogOut() {
     localStorage.removeItem("myTokenInLocalStorage")
     navigate("/");
@@ -26,7 +46,7 @@ export default function HomeScreen() {
         <ion-icon name="log-out-outline" onClick={LogOut}></ion-icon>
       </Head>
       <HistoryBox>
-      <WithoutHistory/>
+      {history.length <= 0 ?  <WithoutHistory/> : <WithHistory/>}
       </HistoryBox>
       <NewRecord>
         <span onClick={AddDeposit}>
