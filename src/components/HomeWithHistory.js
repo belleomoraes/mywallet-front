@@ -4,6 +4,7 @@ export default function WithtHistory({ history }) {
   let depositValue = 0;
   let withdrawValue = 0;
   let totalValue;
+  const lastHistory = history.length - 9
   const [isOwing, setIsOwing] = useState(false);
 
   const depositList = history
@@ -22,7 +23,7 @@ export default function WithtHistory({ history }) {
   }
 
   totalValue = depositValue - withdrawValue;
-  
+
   useEffect(() => {
     if (totalValue < 0) {
       setIsOwing(true);
@@ -33,14 +34,15 @@ export default function WithtHistory({ history }) {
       {history.map((registration) => (
         <span>
           <div>
-            <h2>{registration.date}</h2>
-            <h3>{registration.description}</h3>
+          <h2>{registration.date}</h2>
+          <h3>{registration.description}</h3>
           </div>
+
           <ColorRegistration typeColor={registration.type}>
             <h4>R${registration.value}</h4>
           </ColorRegistration>
         </span>
-      ))}
+      )).slice(lastHistory)}
       <span>
         <h5>SALDO</h5>
         <ColorTotalValue isOwing={isOwing}>
