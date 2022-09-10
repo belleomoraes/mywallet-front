@@ -5,6 +5,7 @@ import Button from "./Styles/ButtonStyle";
 import RegisterOrSignIn from "./Styles/RegisterOrSignInStyle";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import axios from "axios";
 
 export default function LoginScreen() {
   const navigate = useNavigate();
@@ -18,7 +19,35 @@ export default function LoginScreen() {
       ...loginInfo,
       [e.target.name]: e.target.value,
     });
-  console.log(loginInfo)
+    console.log(loginInfo);
+  }
+
+  function sendLoginInfo() {
+    const promise = axios.post("http://localhost:5000/", loginInfo);
+
+    promise.then((res) => {
+      localStorage.setItem("myTokenInLocalStorage", res.data);
+      console.log(localStorage);
+      navigate("/home");
+    });
+
+    promise.catch((res) => {
+      if (res.response.status === 422) {
+        alert("Preencha todos os campos");
+        setLoginInfo({
+          email: "",
+          password: "",
+        });
+      }
+
+      if (res.response.status === 404) {
+        alert("E-mail ou senha incorretos");
+        setLoginInfo({
+          email: "",
+          password: "",
+        });
+      }
+    });
   }
   function ChangeScreen() {
     navigate("/sign-up");
@@ -44,7 +73,7 @@ export default function LoginScreen() {
           />
         </form>
       </Input>
-      <Button>Entrar</Button>
+      <Button onClick={sendLoginInfo}>Entrar</Button>
       <RegisterOrSignIn onClick={ChangeScreen}>Primeira vez? Cadastre-se</RegisterOrSignIn>
     </Login>
   );
