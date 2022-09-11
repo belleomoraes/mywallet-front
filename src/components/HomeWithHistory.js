@@ -4,7 +4,7 @@ export default function WithtHistory({ history }) {
   let depositValue = 0;
   let withdrawValue = 0;
   let totalValue;
-  const lastHistory = history.length - 9
+  
   const [isOwing, setIsOwing] = useState(false);
 
   const depositList = history
@@ -42,7 +42,7 @@ export default function WithtHistory({ history }) {
             <h4>R${registration.value}</h4>
           </ColorRegistration>
         </span>
-      )).slice(lastHistory)}
+      )).slice(-9)}
       <span>
         <h5>SALDO</h5>
         <ColorTotalValue isOwing={isOwing}>
