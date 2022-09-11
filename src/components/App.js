@@ -7,13 +7,10 @@ import RegistrationScreen from "./RegistrationScreen"
 import HomeScreen from "./HomeScreen"
 import DepositScreen from "./DepositScreen"
 import WithDrawScreen from "./WithDrawScreen"
-import { useState } from "react";
 
 export default function App() {
-  const [username, setUsername] = useState("")
-
   return (
-    <UserContext.Provider value = {{username, setUsername}}>
+    <UserContext.Provider >
       <GlobalStyle />
       <BrowserRouter>
         <Routes>
