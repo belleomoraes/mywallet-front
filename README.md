@@ -10,11 +10,10 @@ With this API, users can:
 - List all financial events for a user
 
 
-## Technologies
-- Node.js
-- Express
-- MongoDB
-- Libraries: bcrypt, cors, dotenv, joi, nanoid, uuid
+## Technologies and Libraries
+- React
+- React Icons
+- Syled-components
 
 ## How to run
 1. Clone the back-end repository at https://github.com/belleomoraes/mywallet-back and follow instructions to run
